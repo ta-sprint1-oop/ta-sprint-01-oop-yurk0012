@@ -12,37 +12,64 @@ public class EmailNotification extends Notification {
     public EmailNotification(String recipient, String message, int priority, String senderEmail, String subject, boolean hasAttachment) {
         super(recipient, message, priority);
         // TODO: Ініціалізація додаткових полів
+        this.senderEmail = senderEmail;
+        this.subject = subject;
+        this.hasAttachment = hasAttachment;
+
+
     }
 
     @Override
     public boolean isDeliverable() {
         // TODO: Перевірка що email містить @ і .
+        if (senderEmail.contains("@") && senderEmail.contains(".")) {
+            return true;
+        }
         return false;
     }
 
     public boolean isSpam() {
-        // TODO: Якщо subject містить "free", "win", "click" (case insensitive)
+        String lowerSubject = subject.toLowerCase();
+
+        if (lowerSubject.contains("free") ||
+                lowerSubject.contains("win") ||
+                lowerSubject.contains("click")) {
+
+            return true;
+        }
+
         return false;
     }
 
     @Override
     public String getFormattedMessage() {
         // TODO: Subject: {subject}\n{message}
-        return null;
+
+        return "Subject" + subject + "/n" + message;
     }
 
     @Override
     public int estimateDeliverySeconds() {
         // TODO: 30
-        return 0;
+        return 30;
     }
 
     @Override
     protected void performSend() {
         // TODO: Симуляція відправки (println)
+        System.out.println("Sending email...");
+        System.out.println("Content:" + getFormattedMessage());
     }
 
-    public String getSenderEmail() { return senderEmail; }
-    public String getSubject() { return subject; }
-    public boolean isHasAttachment() { return hasAttachment; }
+    public String getSenderEmail() {
+        return senderEmail;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public boolean isHasAttachment() {
+        return hasAttachment;
+    }
 }
