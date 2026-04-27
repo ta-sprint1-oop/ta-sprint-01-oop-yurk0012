@@ -56,7 +56,6 @@ public class EmailNotification extends Notification {
 
     @Override
     protected void performSend() {
-        // TODO: Симуляція відправки (println)
         System.out.println("Sending email...");
         System.out.println("Content:" + getFormattedMessage());
     }
