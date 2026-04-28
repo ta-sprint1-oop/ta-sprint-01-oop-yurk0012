@@ -21,31 +21,19 @@ public class EmailNotification extends Notification {
 
     @Override
     public boolean isDeliverable() {
-        // TODO: Перевірка що email містить @ і .
-        if (senderEmail.contains("@") && senderEmail.contains(".")) {
-            return true;
-        }
-        return false;
+        return recipient.contains("@") && recipient.contains(".");
     }
 
     public boolean isSpam() {
-        String lowerSubject = subject.toLowerCase();
+        if (subject == null) return false;
 
-        if (lowerSubject.contains("free") ||
-                lowerSubject.contains("win") ||
-                lowerSubject.contains("click")) {
-
-            return true;
-        }
-
-        return false;
+        String lower = subject.toLowerCase();
+        return lower.contains("free") || lower.contains("win") || lower.contains("click");
     }
 
     @Override
     public String getFormattedMessage() {
-        // TODO: Subject: {subject}\n{message}
-
-        return "Subject" + subject + "/n" + message;
+        return "Subject: " + subject + "\n" + message;
     }
 
     @Override
